@@ -15,6 +15,8 @@
 		B5E76587234B56E00002983C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E76585234B56E00002983C /* LaunchScreen.storyboard */; };
 		B5E76592234B56E10002983C /* Wage_WatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E76591234B56E10002983C /* Wage_WatchTests.swift */; };
 		B5E7659D234B56E10002983C /* Wage_WatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E7659C234B56E10002983C /* Wage_WatchUITests.swift */; };
+		B5E765AD234B573C0002983C /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E765AC234B573C0002983C /* Currency.swift */; };
+		B5E765AF234B574A0002983C /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E765AE234B574A0002983C /* Period.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		B5E76598234B56E10002983C /* Wage WatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wage WatchUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E7659C234B56E10002983C /* Wage_WatchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wage_WatchUITests.swift; sourceTree = "<group>"; };
 		B5E7659E234B56E10002983C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5E765AC234B573C0002983C /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		B5E765AE234B574A0002983C /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				B5E7657A234B56DE0002983C /* AppDelegate.swift */,
 				B5E7657C234B56DE0002983C /* SceneDelegate.swift */,
 				B5E7657E234B56DE0002983C /* ContentView.swift */,
+				B5E765AC234B573C0002983C /* Currency.swift */,
+				B5E765AE234B574A0002983C /* Period.swift */,
 				B5E76580234B56E00002983C /* Assets.xcassets */,
 				B5E76585234B56E00002983C /* LaunchScreen.storyboard */,
 				B5E76588234B56E00002983C /* Info.plist */,
@@ -268,8 +274,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E7657B234B56DE0002983C /* AppDelegate.swift in Sources */,
+				B5E765AD234B573C0002983C /* Currency.swift in Sources */,
 				B5E7657D234B56DE0002983C /* SceneDelegate.swift in Sources */,
 				B5E7657F234B56DE0002983C /* ContentView.swift in Sources */,
+				B5E765AF234B574A0002983C /* Period.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
