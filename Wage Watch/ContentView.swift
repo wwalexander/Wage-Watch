@@ -191,7 +191,7 @@ struct ContentView: View {
                         self.start()
                     }
                 })
-        }
+        }.accentColor(Color(red: 133.0/255.0, green: 187.0/255.0, blue: 101.0/255.0))
     }
 }
 
