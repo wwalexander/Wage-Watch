@@ -86,6 +86,8 @@ struct ContentView: View {
         return numberFormatter
     }
     
+    private let accentColor: Color = Color(red: 133.0 / 255.0, green: 187.0 / 255.0, blue: 101.0 / 255.0)
+    
     private func start() {
         earnedPrevious = earned
         startDate = Date()
@@ -154,7 +156,7 @@ struct ContentView: View {
                             }) {
                                 Text("Done")
                             })
-                    }
+                    }.accentColor(self.accentColor)
                 }
                 Spacer()
                 if startDate == nil {
@@ -191,7 +193,7 @@ struct ContentView: View {
                         self.start()
                     }
                 })
-        }.accentColor(Color(red: 133.0/255.0, green: 187.0/255.0, blue: 101.0/255.0))
+        }.accentColor(accentColor)
     }
 }
 
