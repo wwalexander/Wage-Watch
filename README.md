@@ -7,5 +7,5 @@ Time is money, as the saying goes, and Wage Watch is here to make the conversion
 
 Wage Watch can show results in every major world currency, and supports hourly, weekly, monthly and yearly pay periods. Wage Watch will continue accurately tracking the money you've earned even when Wage Watch is closed or your device is turned off.
 
-![A screenshot of the main screen of Wage Watch](Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-10-14%20at%2021.21.13.png)
-![A screenshot of the wage configuration screen of Wage Watch](Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-10-14%20at%2021.32.34.png)
+<img src="Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-10-14%20at%2021.21.13.png" width="414" height="896" />
+<img src="Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-10-14%20at%2021.32.34.png" width="414" height="896" />
