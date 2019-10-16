@@ -22,15 +22,15 @@ struct ContentView: View {
         return UserDefaults.standard.integer(forKey: "Period")
     }()
     
-    @State private var earned: Double = {
-        return UserDefaults.standard.double(forKey: "Earned")
+    @State private var elapsed: Double = {
+        return UserDefaults.standard.double(forKey: "Elapsed")
     }()
     
-    @State private var earnedPrevious: Double = 0
+    @State private var earned: Double = 0
     
     @State private var startDate: Date? = {
-        if let startDate = UserDefaults.standard.object(forKey: "StartDate") {
-            return startDate as? Date
+        if let startDate = UserDefaults.standard.object(forKey: "StartDate") as? Date {
+            return startDate
         } else {
             return nil
         }
@@ -89,22 +89,19 @@ struct ContentView: View {
     private let accentColor: Color = Color(red: 133.0 / 255.0, green: 187.0 / 255.0, blue: 101.0 / 255.0)
     
     private func start() {
-        earnedPrevious = earned
-        startDate = Date()
-        UserDefaults.standard.set(startDate, forKey: "StartDate")
         let timeInterval = 0.01 / secondlyWage
         
         timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-            self.earned = self.earnedPrevious + self.elapsedSinceStart * self.secondlyWage
+            self.earned = (self.elapsed + self.elapsedSinceStart) * self.secondlyWage
         }
     }
     
     private func stop() {
         if timer != nil {
             timer?.invalidate()
-            earned = earnedPrevious + elapsedSinceStart * secondlyWage
-            UserDefaults.standard.set(earned, forKey: "Earned")
             timer = nil
+            elapsed += elapsedSinceStart
+            UserDefaults.standard.set(elapsed, forKey: "Elapsed")
             startDate = nil
             UserDefaults.standard.removeObject(forKey: "StartDate")
         }
@@ -159,15 +156,18 @@ struct ContentView: View {
                     }.accentColor(self.accentColor)
                 }
                 Spacer()
-                if startDate == nil {
-                    if self.earned > 0 {
+                if timer == nil {
+                    if self.elapsed > 0 {
                         Button(action: {
                             self.earned = 0
+                            self.elapsed = 0
                         }) {
                             Text("Reset")
                         }
                     }
                     Button(action: {
+                        self.startDate = Date()
+                        UserDefaults.standard.set(self.startDate, forKey: "StartDate")
                         self.start()
                     }) {
                         Text("Start")
@@ -189,7 +189,6 @@ struct ContentView: View {
                 .bold()
                 .onAppear(perform: {
                     if self.startDate != nil {
-                        self.earned += self.elapsedSinceStart * self.secondlyWage
                         self.start()
                     }
                 })
