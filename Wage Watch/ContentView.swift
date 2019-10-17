@@ -88,11 +88,16 @@ struct ContentView: View {
     
     private let accentColor: Color = Color(red: 133.0 / 255.0, green: 187.0 / 255.0, blue: 101.0 / 255.0)
     
+    private func updateEarned() {
+        self.earned = (self.elapsed + self.elapsedSinceStart) * self.secondlyWage
+    }
+    
     private func start() {
         let timeInterval = 0.01 / secondlyWage
+        updateEarned()
         
         timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-            self.earned = (self.elapsed + self.elapsedSinceStart) * self.secondlyWage
+            self.updateEarned()
         }
     }
     
