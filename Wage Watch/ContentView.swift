@@ -60,12 +60,14 @@ struct ContentView: View {
         return wage / periods[periodIndex].rawValue
     }
     
-    private var elapsedSinceStart: TimeInterval {
-        if let startDate = startDate {
-            return Date().timeIntervalSince(startDate)
-        } else {
-            return 0
-        }
+    private var earnedSinceStart: TimeInterval {
+        return secondlyWage * {
+            if let startDate = startDate {
+                return Date().timeIntervalSince(startDate)
+            } else {
+                return 0
+            }
+        }()
     }
 
     private let decimalNumberFormatter: NumberFormatter = {
@@ -86,7 +88,7 @@ struct ContentView: View {
     private let accentColor: Color = Color(red: 133.0 / 255.0, green: 187.0 / 255.0, blue: 101.0 / 255.0)
     
     private func updateEarnedCurrent() {
-        earnedCurrent = earned + (elapsedSinceStart * secondlyWage)
+        earnedCurrent = earned + earnedSinceStart
     }
     
     private func start() {
@@ -106,7 +108,7 @@ struct ContentView: View {
     private func stop() {
         timer?.invalidate()
         timer = nil
-        earned += elapsedSinceStart * secondlyWage
+        earned += earnedSinceStart
         UserDefaults.standard.set(earned, forKey: "Earned")
         startDate = nil
         UserDefaults.standard.removeObject(forKey: "StartDate")
