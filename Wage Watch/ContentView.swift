@@ -22,18 +22,15 @@ struct ContentView: View {
         return UserDefaults.standard.integer(forKey: "Period")
     }()
     
-    @State private var elapsed: Double = {
-        return UserDefaults.standard.double(forKey: "Elapsed")
+    @State private var earned: Double = {
+        return UserDefaults.standard.double(forKey: "Earned")
     }()
     
-    @State private var earned: Double = 0
+    @State private var earnedCurrent: Double = 0
     
     @State private var startDate: Date? = {
-        if let startDate = UserDefaults.standard.object(forKey: "StartDate") as? Date {
-            return startDate
-        } else {
-            return nil
-        }
+        print("In startDate initializer")
+        return UserDefaults.standard.object(forKey: "StartDate") as? Date
     }()
     
     @State private var wageConfigurationIsPresented: Bool = false
@@ -88,28 +85,37 @@ struct ContentView: View {
     
     private let accentColor: Color = Color(red: 133.0 / 255.0, green: 187.0 / 255.0, blue: 101.0 / 255.0)
     
-    private func updateEarned() {
-        self.earned = (self.elapsed + self.elapsedSinceStart) * self.secondlyWage
+    private func updateEarnedCurrent() {
+        earnedCurrent = earned + (elapsedSinceStart * secondlyWage)
     }
     
     private func start() {
-        let timeInterval = 0.01 / secondlyWage
-        updateEarned()
+        if startDate == nil {
+            startDate = Date()
+        }
         
+        UserDefaults.standard.set(startDate, forKey: "StartDate")
+        self.updateEarnedCurrent()
+        let timeInterval = 0.01 / secondlyWage
+
         timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-            self.updateEarned()
+            self.updateEarnedCurrent()
         }
     }
     
     private func stop() {
-        if timer != nil {
-            timer?.invalidate()
-            timer = nil
-            elapsed += elapsedSinceStart
-            UserDefaults.standard.set(elapsed, forKey: "Elapsed")
-            startDate = nil
-            UserDefaults.standard.removeObject(forKey: "StartDate")
-        }
+        timer?.invalidate()
+        timer = nil
+        earned += elapsedSinceStart * secondlyWage
+        UserDefaults.standard.set(earned, forKey: "Earned")
+        startDate = nil
+        UserDefaults.standard.removeObject(forKey: "StartDate")
+    }
+    
+    private func reset() {
+        earnedCurrent = 0
+        earned = 0
+        UserDefaults.standard.set(0, forKey: "Earned")
     }
     
     private func persistWageConfiguration() {
@@ -127,9 +133,9 @@ struct ContentView: View {
                 }) {
                     return Text("\(self.currencyNumberFormatter.string(from: NSNumber(value: self.wage)) ?? "") \(self.periods[self.periodIndex].description)")
                 }
-                .padding(.top)
-                .sheet(isPresented: $wageConfigurationIsPresented, onDismiss: {
-                    self.persistWageConfiguration()
+                    .padding(.top)
+                    .sheet(isPresented: $wageConfigurationIsPresented, onDismiss: {
+                        self.persistWageConfiguration()
                 }) {
                     NavigationView {
                         Form {
@@ -161,18 +167,15 @@ struct ContentView: View {
                     }.accentColor(self.accentColor)
                 }
                 Spacer()
-                if timer == nil {
-                    if self.elapsed > 0 {
+                if startDate == nil {
+                    if earned > 0 {
                         Button(action: {
-                            self.earned = 0
-                            self.elapsed = 0
+                            self.reset()
                         }) {
                             Text("Reset")
                         }
                     }
                     Button(action: {
-                        self.startDate = Date()
-                        UserDefaults.standard.set(self.startDate, forKey: "StartDate")
                         self.start()
                     }) {
                         Text("Start")
@@ -189,7 +192,7 @@ struct ContentView: View {
                         .padding()
                 }
             }
-            Text(currencyNumberFormatter.string(from: NSNumber(value: earned)) ?? "")
+            Text(currencyNumberFormatter.string(from: NSNumber(value: earnedCurrent)) ?? "")
                 .font(.largeTitle)
                 .bold()
                 .onAppear(perform: {
