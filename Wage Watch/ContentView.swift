@@ -29,7 +29,6 @@ struct ContentView: View {
     @State private var earnedCurrent: Double = 0
     
     @State private var startDate: Date? = {
-        print("In startDate initializer")
         return UserDefaults.standard.object(forKey: "StartDate") as? Date
     }()
     
